@@ -179,17 +179,6 @@ class Valve extends Core {
 
     async queryRules(state) {
         state.raw.rules = {};
-        this.debugLog("Requesting rules ...");
-        const b = await this.sendPacket(0x56,true,null,0x45,true);
-        if (b === null) return; // timed out - the server probably has rules disabled
-
-        const reader = this.reader(b);
-        const num = reader.uint(2);
-        for(let i = 0; i < num; i++) {
-            const key = reader.string();
-            const value = reader.string();
-            state.raw.rules[key] = value;
-        }
     }
 
     async cleanup(state) {
